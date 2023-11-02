@@ -1,3 +1,9 @@
+# add here
+models--runwayml--stable-diffusion-v1-5/
+prompt.png
+result/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
