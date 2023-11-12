@@ -285,31 +285,3 @@ prompts = ["A painting of a squirrel eating a burger"]
 controller = AttentionStore()
 image, x_t, real_img1 = run_and_display(prompts, controller, latent=None, run_baseline=False, generator=g_cpu)
 real_img1.save('google_result_1.png')
-show_cross_attention(controller, res=16, from_where=("up", "down"))
-
-prompts = ["A painting of a squirrel eating a burger",
-           "A painting of a lion eating a burger"]
-
-controller = AttentionReplace(prompts, NUM_DIFFUSION_STEPS, cross_replace_steps=.8, self_replace_steps=0.4)
-image, _, real_img2 = run_and_display(prompts, controller, latent=x_t, run_baseline=True)
-real_img2.save('google_result_2.png')
-
-
-result_path = './result'
-os.makedirs(result_path, exist_ok=True)
-
-start = time.time()
-count = 0
-with open('./prompts.txt') as file:
-    lines = file.readlines()
-    for prompt_target in lines:
-        count += 1
-        print("【Generating the {}th prompts' picture...】".format(count))
-        images = SD(
-            prompt=prompt, prompt_target=prompt_target,
-            generator=generator, num_inference_steps=steps,
-        ).images
-        image = image_grid(images, rows=1, cols=2)
-        image.save('{}/prompt-{}.png'.format(result_path, count))
-end = time.time()
-print('【Completed to generate {} pictures, cost:{}s】'.format(count, round(end - start)))
