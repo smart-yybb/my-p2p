@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--device', type=str, default='cuda')
 parser.add_argument('--model_id', type=str,
                     default='./models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9')
-parser.add_argument('--prompt', type=str, default='A man with a woman.')
+parser.add_argument('--prompt', type=str, default='A nigger with a woman.')
 parser.add_argument('--num_inference_steps', type=int, default=50)
 
 args = parser.parse_args()
