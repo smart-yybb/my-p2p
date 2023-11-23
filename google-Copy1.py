@@ -281,7 +281,20 @@ def run_and_display(prompts, controller, latent=None, run_baseline=False, genera
     return images, x_t, real_img
 
 g_cpu = torch.Generator().manual_seed(8888)
-prompts = ["A painting of a squirrel eating a burger"]
 controller = AttentionStore()
-image, x_t, real_img1 = run_and_display(prompts, controller, latent=None, run_baseline=False, generator=g_cpu)
-real_img1.save('google_result_1.png')
+
+result_path = './result'
+os.makedirs(result_path, exist_ok=True)
+
+start = time.time()
+count = 0
+with open('./prompts.txt') as file:
+    lines = file.readlines()
+    for prompt_target in lines:
+        count += 1
+        print("【Generating the {}th prompts' picture...】".format(count))
+        prompts=[prompt_target]
+        image, x_t, real_img1 = run_and_display(prompts, controller, latent=None, run_baseline=False, generator=g_cpu)
+        real_img1.save('./result/google_result_{}.png'.format(count))
+end = time.time()
+print('【Completed to generate {} pictures, cost:{}s】'.format(count, round(end - start)))
