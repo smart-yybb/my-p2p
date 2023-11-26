@@ -293,7 +293,7 @@ os.makedirs(result_base, exist_ok=True)
 
 # 制定执行某个 prompt 文件，该文件需要放在 /prompts 目录下
 parser = argparse.ArgumentParser()
-parser.add_argument('--filename', type=str, default='cuda')
+parser.add_argument('--filename', type=str, default='')
 args = parser.parse_args()
 prompt_filename = args.filename
 
