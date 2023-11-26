@@ -1,3 +1,11 @@
+# NOTE:
+如果要使用 Google 的 p2p，需要切换分支到 google，执行以下命令
+```
+git checkout google
+git pull
+```
+
+
 <img src="./images/prompt-to-prompt.png" width="521" alt="Architecture Diagram of Prompt-to-Prompt"/>
 
 # Prompt-to-Prompt
