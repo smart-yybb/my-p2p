@@ -303,14 +303,19 @@ if prompt_filename == "":
 else:
     filenames.append(prompt_filename)
 
-print(filenames)
+if len(filenames) == 0:
+    print("/prompts 目录下无文件")
+    return
+else:
+    print("prompts filenames:{}".format(filenames))
 
 start = time.time()
 for filename in (filenames):
     splits = filename.split(".")
-    folder = splits[0]
-    if folder == "": # 跳过 .xxx 无效文件
+    if len(splits) < 2 || splits[0] == "" || splits[1] != "txt": # 跳过无效文件
+        print("illegal filename:{}".format(filename))
         continue
+    folder = splits[0]
     result_path = result_base + "/" + folder
     os.makedirs(result_path, exist_ok=True)
     count = 0
