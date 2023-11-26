@@ -2,6 +2,7 @@
 models--runwayml--stable-diffusion-v1-5/
 prompt.png
 result/
+prompts/
 *.xml
 *.png
 

@@ -6,6 +6,9 @@ import numpy as np
 import abc
 import ptp_utils
 import seq_aligner
+import os
+import time
+import argparse
 
 LOW_RESOURCE = False 
 NUM_DIFFUSION_STEPS = 50
@@ -281,20 +284,43 @@ def run_and_display(prompts, controller, latent=None, run_baseline=False, genera
     return images, x_t, real_img
 
 g_cpu = torch.Generator().manual_seed(8888)
-controller = AttentionStore()
 
-result_path = './result'
-os.makedirs(result_path, exist_ok=True)
+# controller = AttentionStore()
+controller = EmptyControl()
+
+result_base = './result'
+os.makedirs(result_base, exist_ok=True)
+
+# 制定执行某个 prompt 文件，该文件需要放在 /prompts 目录下
+parser = argparse.ArgumentParser()
+parser.add_argument('--filename', type=str, default='cuda')
+args = parser.parse_args()
+prompt_filename = args.filename
+
+filenames = []
+if prompt_filename == "":
+    filenames = os.listdir("./prompts/")
+else:
+    filenames.append(prompt_filename)
+
+print(filenames)
 
 start = time.time()
-count = 0
-with open('./prompts.txt') as file:
-    lines = file.readlines()
-    for prompt_target in lines:
-        count += 1
-        print("【Generating the {}th prompts' picture...】".format(count))
-        prompts=[prompt_target]
-        image, x_t, real_img1 = run_and_display(prompts, controller, latent=None, run_baseline=False, generator=g_cpu)
-        real_img1.save('./result/google_result_{}.png'.format(count))
+for filename in (filenames):
+    splits = filename.split(".")
+    folder = splits[0]
+    if folder == "": # 跳过 .xxx 无效文件
+        continue
+    result_path = result_base + "/" + folder
+    os.makedirs(result_path, exist_ok=True)
+    count = 0
+    with open('./prompts/{}'.format(filename)) as file:
+        lines = file.readlines()
+        for prompt_target in lines:
+            count += 1
+            print("【Generating the {} {}th prompts' picture...】".format(folder, count))
+            prompts=[prompt_target]
+            image, x_t, real_img1 = run_and_display(prompts, controller, latent=None, run_baseline=False, generator=g_cpu)
+            real_img1.save('{}/{}-{}.png'.format(result_path, folder, count))
 end = time.time()
 print('【Completed to generate {} pictures, cost:{}s】'.format(count, round(end - start)))
