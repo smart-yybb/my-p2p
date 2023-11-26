@@ -1,5 +1,5 @@
 # Get Start
-* 文件中一行代表一个 prompts，文件命名格式为 “xxx.txt”，程序只读取 txt 文件，文件需要放在目录 "/prompts" 下 *
+文件中一行代表一个 prompts，文件命名格式为 “xxx.txt”，程序只读取 txt 文件，文件需要放在目录 "/prompts" 下
 
 ## 批量执行 prompts 生成图片
 1. 将 prompts 的数据集放在文件夹 /prompts 下
