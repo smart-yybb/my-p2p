@@ -285,8 +285,8 @@ def run_and_display(prompts, controller, latent=None, run_baseline=False, genera
 
 g_cpu = torch.Generator().manual_seed(8888)
 
-# controller = AttentionStore()
-controller = EmptyControl()
+controller = AttentionStore()
+# controller = EmptyControl()
 
 result_base = './result'
 os.makedirs(result_base, exist_ok=True)
@@ -303,16 +303,12 @@ if prompt_filename == "":
 else:
     filenames.append(prompt_filename)
 
-if len(filenames) == 0:
-    print("/prompts 目录下无文件")
-    return
-else:
-    print("prompts filenames:{}".format(filenames))
+print("prompts filenames:{}".format(filenames))
 
 start = time.time()
 for filename in (filenames):
     splits = filename.split(".")
-    if len(splits) < 2 || splits[0] == "" || splits[1] != "txt": # 跳过无效文件
+    if len(splits) < 2 or splits[0] == "" or splits[1] != "txt": # 跳过无效文件
         print("illegal filename:{}".format(filename))
         continue
     folder = splits[0]
